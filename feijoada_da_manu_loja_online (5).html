@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feijoada da Manu</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #fcf8f5; color: #222; }
+    header { background: linear-gradient(90deg, #4b0000 0%, #c40000 100%); color: #fff; padding: 24px; text-align: center; }
+    header h1 { margin: 0; }
+    .container { max-width: 800px; margin: auto; padding: 20px; }
+    button { background: linear-gradient(90deg, #800000, #c40000); color: #fff; border: none; padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+    button:hover { background: linear-gradient(90deg, #c40000, #ff7a00); }
+    .cart { position: fixed; bottom: 20px; right: 20px; background: #ff7a00; color: #fff; padding: 16px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; }
+    textarea { width:100%; min-height:80px; border-radius:8px; padding:10px; border:2px solid #c40000; }
+    footer { text-align: center; padding: 20px; color: #555; background: #f5f5f5; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🍲 Feijoada da Manu</h1>
+  <p>Site de teste - seu site vai abrir aqui</p>
+</header>
+
+<div class="container">
+  <h2>Exemplo de produto</h2>
+  <p>Feijoada Completa P - R$ 29,99</p>
+  <button onclick="addToCart('Feijoada Completa P',29.99)">Adicionar ao carrinho</button>
+
+  <h2>📝 Observações do pedido</h2>
+  <textarea id="obs" placeholder="Digite aqui suas observações"></textarea>
+</div>
+
+<div class="cart" onclick="finishOrder()">🛒 Finalizar Pedido</div>
+
+<footer>
+  <p>Entrega somente aos finais de semana • Retirada no local durante a semana</p>
+</footer>
+
+<script>
+let cart = [];
+function addToCart(name, price) {
+  cart.push({ name, price });
+  alert(name + ' adicionado ao carrinho');
+}
+
+function finishOrder() {
+  if(cart.length===0) return alert('Carrinho vazio');
+
+  let total=0;
+  let items=cart.map(i=>{ total+=i.price; return `• ${i.name} - R$ ${i.price.toFixed(2).replace('.',',')}`; }).join('%0A');
+
+  const obs=document.getElementById('obs')?.value||'';
+  const obsText=obs?`%0A%0A📝 Observações:%0A${encodeURIComponent(obs)}`:'';
+
+  const message='Olá! Gostaria de fazer o pedido:%0A%0A'+items+
+                `%0A%0A🧾 Total: R$ ${total.toFixed(2).replace('.',',')}`+obsText+
+                '%0A%0AForma de recebimento:%0A( ) Entrega – final de semana%0A( ) Retirada no local%0A%0AEndereço:%0ARua Alfredo Viêira de Melo, 147, Primeiro andar amarelo, Jardim São Paulo, Recife - PE, CEP 50781-520';
+
+  window.open('https://wa.me/5581993083985?text='+message,'_blank');
+}
+</script>
+
+</body>
+</html>
